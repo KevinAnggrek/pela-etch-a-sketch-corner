@@ -1,102 +1,105 @@
 :root {
-    --pela-dark-blue:#22396c;
-    --pela-laser-blue:#3d70d9;
-    --pela-ice-blue:#9bd3e6;
-    --pela-yellow:#fef3d0;
-    --pela-light-yellow:#fdf9ea;
+  --pela-dark-blue: #22396c;
+  --pela-laser-blue: #3d70d9;
+  --pela-ice-blue: #9bd3e6;
+  --pela-yellow: #fef3d0;
+  --pela-light-yellow: #fdf9ea;
 }
 
 body {
-    font-family: 'Arial','Times New Roman',sans-serif;
-    height: 100%;
+  font-family: "Arial", "Times New Roman", sans-serif;
+  height: 100%;
 }
 
 .header-title {
-    text-align: center;
-    width: 100%;
-    margin: 30px auto;
+  text-align: center;
+  width: 100%;
+  margin: 30px auto;
 }
 
 main {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 100px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 100px;
 }
 
 .brush-setting-container {
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    flex: 0 0 auto;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex: 0 0 auto;
 }
 
 button,
 input {
-    width: 100%;
+  width: 100%;
 }
 
-input[type='color'] {
-    -webkit-appearance: none;
-    width: 80px;
-    height: 80px;
-    background-color: inherit;
-    border: none;
-    color: inherit;
-    cursor: pointer;
-    outline: none;
-  }
+input[type="color"] {
+  -webkit-appearance: none;
+  width: 80px;
+  height: 80px;
+  background-color: inherit;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+}
 
-input[type='color']::-webkit-color-swatch-wrapper {
-    padding: 0;
-  }
-  
-input[type='color']::-webkit-color-swatch {
-    border: none;
-    border-radius: 50px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  }
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
 
 button {
-    padding: 10px 20px;
-    background-color: var(--pela-ice-blue);
-    border: 1px solid var(--pela-ice-blue);
-    border-radius: 6px;
+  padding: 10px 20px;
+  background-color: var(--pela-ice-blue);
+  border: 1px solid var(--pela-ice-blue);
+  border-radius: 6px;
 }
 
 .canvas {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .grid-container {
-    display: flex;
-    width: 600px;
-    height: 600px;
-    flex: 0 0 auto;
+  display: flex;
+  width: 600px;
+  height: 600px;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 0px;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
 }
 
 .grid-size-setting-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.grid-element-original {
-    background-color: white;
-}
-
-.grid-element-colored {
-    background-color: var(--grid-color,white);
+.grid-element {
+  background-color: var(--grid-color, white);
+  flex: 0 0 auto;
+  width: var(--grid-size);
 }
