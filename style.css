@@ -4,14 +4,17 @@
   --pela-ice-blue: #9bd3e6;
   --pela-yellow: #fef3d0;
   --pela-light-yellow: #fdf9ea;
+
+  --grid-size: 16;
 }
 
 body {
-  font-family: "Arial", "Times New Roman", sans-serif;
+  font-family: "Prata", "Arial", "Times New Roman", sans-serif;
   height: 100%;
 }
 
 .header-title {
+  font-family: "Yeseva One", "Arial", sans-serif;
   text-align: center;
   width: 100%;
   margin: 30px auto;
@@ -52,6 +55,7 @@ input[type="color"] {
   color: inherit;
   cursor: pointer;
   outline: none;
+  transition: transform 0.5s;
 }
 
 input[type="color"]::-webkit-color-swatch-wrapper {
@@ -64,11 +68,27 @@ input[type="color"]::-webkit-color-swatch {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+input[type="color"]:hover {
+  transform: scale(1.1);
+}
+
 button {
   padding: 10px 20px;
+  font-family: "Prata", "Arial", sans-serif;
   background-color: var(--pela-ice-blue);
   border: 1px solid var(--pela-ice-blue);
   border-radius: 6px;
+  transition: transform 0.5s, background-color 0.3s, border-color 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+button:focus {
+  background-color: var(--pela-dark-blue);
+  border-color: var(--pela-dark-blue);
+  color: white;
 }
 
 .canvas {
@@ -103,4 +123,5 @@ button {
   background-color: var(--grid-color, white);
   flex: 0 0 auto;
   width: var(--grid-size);
+  height: var(--grid-size);
 }
