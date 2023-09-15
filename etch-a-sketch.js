@@ -134,6 +134,7 @@ function generateRandomColor() {
 // Mode-related Functions
 function setMode(newMode) {
   currentMode = newMode;
+  setButtonActive();
 }
 
 // Clearing-related Functions
@@ -150,6 +151,29 @@ function clearCanvas() {
   });
 }
 
+// Style-related functions
+function setButtonActive() {
+  if (currentMode === "paint") {
+    paintModeButton.classList.add("button-active");
+    rainbowModeButton.classList.remove("button-active");
+    eraserModeButton.classList.remove("button-active");
+  } else if (currentMode === "rainbow") {
+    paintModeButton.classList.remove("button-active");
+    rainbowModeButton.classList.add("button-active");
+    eraserModeButton.classList.remove("button-active");
+  } else if (currentMode === "eraser") {
+    paintModeButton.classList.remove("button-active");
+    rainbowModeButton.classList.remove("button-active");
+    eraserModeButton.classList.add("button-active");
+  }
+}
+
+function deactivateAllButton() {
+  paintModeButton.classList.remove("button-active");
+  rainbowModeButton.classList.remove("button-active");
+  eraserModeButton.classList.remove("button-active");
+}
+
 // Download Function
 // function downloadCanvasAsJPEG() {
 //   domtoimage.toJpeg(gridContainer).then(function (dataUrl) {
@@ -161,4 +185,7 @@ function clearCanvas() {
 // }
 
 // Run the function
-body.onload = setGridElementsOnContainer(DEFAULT_SIZE);
+window.addEventListener("load", () => {
+  setGridElementsOnContainer(DEFAULT_SIZE);
+  setButtonActive();
+});

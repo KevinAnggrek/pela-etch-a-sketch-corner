@@ -19,13 +19,23 @@
       <h1 class="header-title">Pela's Etch-a-Sketch Corner</h1>
     </header>
     <main>
-      <div class="brush-setting-container">
-        <input type="color" id="color-picker" value="#000000" />
-        <button id="paint-mode-button">Color Mode</button>
-        <button id="rainbow-mode-button">Rainbow Mode</button>
-        <button id="eraser-button">Eraser</button>
-        <button id="clear-button">Clear</button>
-        <!-- <button id="download-button">Download</button> -->
+      <div class="sidebar">
+        <div class="misc-setting-container">
+          <input
+            type="checkbox"
+            name="dark-mode-toggle"
+            id="dark-mode-toggle"
+          />
+          <label for="dark-mode-toggle">Dark Mode</label>
+        </div>
+        <div class="brush-setting-container">
+          <input type="color" id="color-picker" value="#000000" />
+          <button id="paint-mode-button">Color Mode</button>
+          <button id="rainbow-mode-button">Rainbow Mode</button>
+          <button id="eraser-button">Eraser</button>
+          <button id="clear-button">Clear</button>
+          <!-- <button id="download-button">Download</button> -->
+        </div>
       </div>
       <div class="canvas">
         <div class="grid-container"></div>
