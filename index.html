@@ -21,12 +21,15 @@
     <main>
       <div class="sidebar">
         <div class="misc-setting-container">
-          <input
+          <div class="dark-mode-toggle-container">
+            <input
             type="checkbox"
             name="dark-mode-toggle"
             id="dark-mode-toggle"
-          />
-          <label for="dark-mode-toggle">Dark Mode</label>
+            />
+            <span class="dark-mode-toggle-slider"></span>
+          </div>
+          <label class="dark-mode-label">Dark Mode</label>
         </div>
         <div class="brush-setting-container">
           <input type="color" id="color-picker" value="#000000" />

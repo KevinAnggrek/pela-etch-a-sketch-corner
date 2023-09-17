@@ -4,6 +4,7 @@
 // Default Variables
 const DEFAULT_MODE = "paint";
 const DEFAULT_SIZE = 16;
+const DEFAULT_DARK_MODE = "light"
 
 // Default Elements
 const body = document.querySelector("body");
@@ -16,11 +17,13 @@ const paintModeButton = document.querySelector("#paint-mode-button");
 const rainbowModeButton = document.querySelector("#rainbow-mode-button");
 const eraserModeButton = document.querySelector("#eraser-button");
 const clearButton = document.querySelector("#clear-button");
+const darkModeToggleButton = document.querySelector(".dark-mode-toggle-container");
 // const downloadButton = document.querySelector("#download-button");
 
 let currentColor = colorPicker.value;
 let currentGridSize = gridSizePicker.value;
 let currentMode = DEFAULT_MODE;
+let currentDarkMode = DEFAULT_DARK_MODE;
 let isMouseDown = false;
 
 // Default Event Listeners
@@ -52,6 +55,16 @@ eraserModeButton.addEventListener("click", () => {
 
 clearButton.addEventListener("click", () => {
   clearCanvas();
+});
+
+darkModeToggleButton.addEventListener("click", (event) => {
+  if (event.target.checked) {
+    currentDarkMode="dark";
+  }
+  else {
+    currentDarkMode="light";
+  }
+  toggleDarkModeDisplay();
 });
 
 // downloadButton.addEventListener("click", () => {
@@ -153,25 +166,57 @@ function clearCanvas() {
 
 // Style-related functions
 function setButtonActive() {
-  if (currentMode === "paint") {
-    paintModeButton.classList.add("button-active");
-    rainbowModeButton.classList.remove("button-active");
-    eraserModeButton.classList.remove("button-active");
-  } else if (currentMode === "rainbow") {
-    paintModeButton.classList.remove("button-active");
-    rainbowModeButton.classList.add("button-active");
-    eraserModeButton.classList.remove("button-active");
-  } else if (currentMode === "eraser") {
-    paintModeButton.classList.remove("button-active");
-    rainbowModeButton.classList.remove("button-active");
-    eraserModeButton.classList.add("button-active");
+  deactivateAllButton();
+  if (currentDarkMode==="light") {
+    if (currentMode === "paint") {
+      paintModeButton.classList.add("button-active");
+    } else if (currentMode === "rainbow") {
+      rainbowModeButton.classList.add("button-active");
+    } else if (currentMode === "eraser") {
+      eraserModeButton.classList.add("button-active");
+    }
   }
+  else {
+    if (currentMode === "paint") {
+      paintModeButton.classList.add("dark-mode-button-active");
+    } else if (currentMode === "rainbow") {
+      rainbowModeButton.classList.add("dark-mode-button-active");
+    } else if (currentMode === "eraser") {
+      eraserModeButton.classList.add("dark-mode-button-active");
+    }
+  }
+  
 }
 
 function deactivateAllButton() {
   paintModeButton.classList.remove("button-active");
   rainbowModeButton.classList.remove("button-active");
   eraserModeButton.classList.remove("button-active");
+  paintModeButton.classList.remove("dark-mode-button-active");
+  rainbowModeButton.classList.remove("dark-mode-button-active");
+  eraserModeButton.classList.remove("dark-mode-button-active");
+}
+
+function toggleDarkModeDisplay() {
+  body.classList.toggle("dark-mode-bg");
+  body.classList.toggle("dark-mode-font");
+
+  paintModeButton.classList.toggle("dark-mode-button");
+  rainbowModeButton.classList.toggle("dark-mode-button");
+  eraserModeButton.classList.toggle("dark-mode-button");
+  clearButton.classList.toggle("dark-mode-button");
+
+  setButtonActive();
+  
+  // if (currentMode==="paint") {
+  //   paintModeButton.classList.toggle("dark-mode-button-active");
+  // }
+  // else if (currentMode==="rainbow") {
+  //   rainbowModeButton.classList.toggle("dark-mode-button-active");
+  // }
+  // else if (currentMode==="eraser") {
+  //   eraserModeButton.classList.toggle("dark-mode-button-active");
+  // }
 }
 
 // Download Function
