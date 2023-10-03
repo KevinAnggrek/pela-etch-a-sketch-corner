@@ -1,5 +1,5 @@
 // Imports
-// import domtoimage from "dom-to-image";
+import { renderLeafAnimation,renderSnowAnimation } from "./leaf-falling-animator.js";
 
 // Default Variables
 const DEFAULT_MODE = "paint";
@@ -18,6 +18,7 @@ const rainbowModeButton = document.querySelector("#rainbow-mode-button");
 const eraserModeButton = document.querySelector("#eraser-button");
 const clearButton = document.querySelector("#clear-button");
 const darkModeToggleButton = document.querySelector(".dark-mode-toggle-container");
+const pelaImg = document.querySelector('.pela-img');
 // const downloadButton = document.querySelector("#download-button");
 
 let currentColor = colorPicker.value;
@@ -167,7 +168,6 @@ function clearCanvas() {
 // Style-related functions
 function setButtonActive() {
   deactivateAllButton();
-  if (currentDarkMode==="light") {
     if (currentMode === "paint") {
       paintModeButton.classList.add("button-active");
     } else if (currentMode === "rainbow") {
@@ -175,26 +175,12 @@ function setButtonActive() {
     } else if (currentMode === "eraser") {
       eraserModeButton.classList.add("button-active");
     }
-  }
-  else {
-    if (currentMode === "paint") {
-      paintModeButton.classList.add("dark-mode-button-active");
-    } else if (currentMode === "rainbow") {
-      rainbowModeButton.classList.add("dark-mode-button-active");
-    } else if (currentMode === "eraser") {
-      eraserModeButton.classList.add("dark-mode-button-active");
-    }
-  }
-  
 }
 
 function deactivateAllButton() {
   paintModeButton.classList.remove("button-active");
   rainbowModeButton.classList.remove("button-active");
   eraserModeButton.classList.remove("button-active");
-  paintModeButton.classList.remove("dark-mode-button-active");
-  rainbowModeButton.classList.remove("dark-mode-button-active");
-  eraserModeButton.classList.remove("dark-mode-button-active");
 }
 
 function toggleDarkModeDisplay() {
@@ -206,17 +192,21 @@ function toggleDarkModeDisplay() {
   eraserModeButton.classList.toggle("dark-mode-button");
   clearButton.classList.toggle("dark-mode-button");
 
-  setButtonActive();
+  gridContainer.classList.toggle("dark-mode-shadow");
+  colorPicker.classList.toggle("dark-mode-shadow");
+
+  if (currentDarkMode==="dark")
+  {
+    pelaImg.src = 'media/img/pela-gnsw.png';
+    renderSnowAnimation();
+  }
+  else
+  {
+    pelaImg.src = 'media/img/pela-light-mode-img.png';
+    renderLeafAnimation();
+  }
   
-  // if (currentMode==="paint") {
-  //   paintModeButton.classList.toggle("dark-mode-button-active");
-  // }
-  // else if (currentMode==="rainbow") {
-  //   rainbowModeButton.classList.toggle("dark-mode-button-active");
-  // }
-  // else if (currentMode==="eraser") {
-  //   eraserModeButton.classList.toggle("dark-mode-button-active");
-  // }
+  setButtonActive();
 }
 
 // Download Function
@@ -233,4 +223,5 @@ function toggleDarkModeDisplay() {
 window.addEventListener("load", () => {
   setGridElementsOnContainer(DEFAULT_SIZE);
   setButtonActive();
+  renderLeafAnimation();
 });

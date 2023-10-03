@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pela's Etch-a-Sketch Corner</title>
     <link rel="stylesheet" href="./style.css" />
+    <script src="leaf-falling-animator.js" type="module" defer></script>
     <script src="etch-a-sketch.js" type="module" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,44 +16,50 @@
     />
   </head>
   <body>
-    <header>
-      <h1 class="header-title">Pela's Etch-a-Sketch Corner</h1>
-    </header>
+    <canvas id="leaf-falling-canvas"></canvas>
     <main>
-      <div class="sidebar">
-        <div class="misc-setting-container">
-          <div class="dark-mode-toggle-container">
-            <input
-            type="checkbox"
-            name="dark-mode-toggle"
-            id="dark-mode-toggle"
-            />
-            <span class="dark-mode-toggle-slider"></span>
+      <div class="main-container">
+        <div class="sidebar">
+          <div class="misc-setting-container">
+            <div class="dark-mode-toggle-container">
+              <input
+              type="checkbox"
+              name="dark-mode-toggle"
+              id="dark-mode-toggle"
+              />
+              <span class="dark-mode-toggle-slider"></span>
+            </div>
+            <label class="dark-mode-label">Dark Mode</label>
           </div>
-          <label class="dark-mode-label">Dark Mode</label>
+          <div class="brush-setting-container">
+            <input type="color" id="color-picker" value="#000000" />
+            <button id="paint-mode-button">Color Mode</button>
+            <button id="rainbow-mode-button">Rainbow Mode</button>
+            <button id="eraser-button">Eraser</button>
+            <button id="clear-button">Clear</button>
+            <!-- <button id="download-button">Download</button> -->
+          </div>
         </div>
-        <div class="brush-setting-container">
-          <input type="color" id="color-picker" value="#000000" />
-          <button id="paint-mode-button">Color Mode</button>
-          <button id="rainbow-mode-button">Rainbow Mode</button>
-          <button id="eraser-button">Eraser</button>
-          <button id="clear-button">Clear</button>
-          <!-- <button id="download-button">Download</button> -->
+        <div class="etch-a-sketch-container">
+          <header>
+            <h1 class="header-title">Pela's Etch-a-Sketch Corner</h1>
+          </header>
+          <div class="canvas">
+            <div class="grid-container"></div>
+            <div class="grid-size-setting-container">
+              <div class="grid-size-value">16 x 16</div>
+              <input
+                type="range"
+                id="grid-size-picker"
+                min="1"
+                max="100"
+                value="16"
+              />
+            </div>
+          </div>
         </div>
       </div>
-      <div class="canvas">
-        <div class="grid-container"></div>
-        <div class="grid-size-setting-container">
-          <div class="grid-size-value">16 x 16</div>
-          <input
-            type="range"
-            id="grid-size-picker"
-            min="1"
-            max="100"
-            value="16"
-          />
-        </div>
-      </div>
+      <img class="pela-img" src="media/img/pela-light-mode-img.png">
     </main>
   </body>
 </html>

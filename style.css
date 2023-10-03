@@ -5,14 +5,35 @@
   --pela-yellow: #fef3d0;
   --pela-light-yellow: #fdf9ea;
   --pela-dark-yellow: #f3dd96;
-
+  --pela-black: #070707;
+  --super-dark-blue: #00011a;
   --grid-size: 16;
 }
 
 body {
   font-family: "Prata", "Arial", "Times New Roman", sans-serif;
-  height: 100%;
+  height: 100vh;
   transition: background-color 1s, color 1s;
+  display: flex;
+  align-items: center;
+}
+
+#leaf-falling-canvas {
+  position:absolute;
+  z-index: -2;
+}
+
+.pela-img {
+  flex: 0 0 auto;
+  height:90vh;
+  border-radius: 5%;
+  animation-name: change-opacity;
+  animation-duration: 2s;
+  animation-timing-function: ease-in;
+}
+
+@keyframes change-opacity {
+  from {opacity: 0;}
 }
 
 .header-title {
@@ -23,26 +44,36 @@ body {
 }
 
 .dark-mode-bg {
-  background-color: var(--pela-dark-blue);
+  background-color: var(--super-dark-blue);
 }
 
 .dark-mode-font {
   color: white;
 }
 
-.dark-mode-shadow {
-  
-}
-
 main {
-  max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 150px;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: row;
   justify-content: flex-start;
+  align-items: center;
   gap: 100px;
+}
+
+.etch-a-sketch-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .sidebar {
@@ -159,6 +190,10 @@ input[type="color"]::-webkit-color-swatch {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+input[type="color"].dark-mode-shadow::-webkit-color-swatch {
+  box-shadow: white 0px 0px 15px;
+}
+
 input[type="color"]:hover {
   transform: scale(1.1);
 }
@@ -207,18 +242,18 @@ button {
   transition: transform 0.5s, background-color 1s, border-color 1s;
 }
 
-.dark-mode-button {
+button.dark-mode-button {
   background-color: var(--pela-yellow);
   border-color: var(--pela-yellow);
 }
 
-.button-active {
+button.button-active {
   background-color: var(--pela-dark-blue);
   border-color: var(--pela-dark-blue);
   color: white;
 }
 
-.dark-mode-button-active {
+button.dark-mode-button.button-active {
   background-color: var(--pela-dark-yellow);
   border-color: var(--pela-dark-yellow);
   color: white;
@@ -249,6 +284,10 @@ button:hover {
   box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.24);
 }
 
+.grid-container.dark-mode-shadow {
+  box-shadow: 0px 3px 20px white;
+}
+
 .grid-size-setting-container {
   display: flex;
   width: 50%;
@@ -267,3 +306,7 @@ button:hover {
   width: var(--grid-size);
   height: var(--grid-size);
 }
+
+
+
+
