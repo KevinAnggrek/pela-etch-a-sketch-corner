@@ -182,8 +182,8 @@ export function renderSnowAnimation() {
 }
 
 window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    canvas.width = document.body.scrollWidth;
+    canvas.height = document.body.scrollHeight;
 });
 
 
