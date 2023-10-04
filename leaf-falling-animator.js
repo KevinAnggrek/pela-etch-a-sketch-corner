@@ -5,54 +5,14 @@ const ctx = canvas.getContext('2d');
 // Initial values
 const LEAF_TOTAL = 150;
 const SNOWFLAKE_TOTAL = 200;
-const leafArray = [];
-const snowflakeArray=[];
+let leafArray = [];
+let snowflakeArray=[];
+let currentAnimation;
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Create image objects
-const leafImg = new Image();
-leafImg.src = 'media/img/maple-leaf.png';
-const darkerLeafImg = new Image();
-darkerLeafImg.src = 'media/img/maple-leaf-darker.png';
-const snowflakeImg = new Image();
-snowflakeImg.src = 'media/img/snowflake.png';
-const snowflakeImg2 = new Image();
-snowflakeImg2.src = 'media/img/snowflake-2.png';
-
-
-export function renderLeafAnimation() {
-    for (let i=0;i<LEAF_TOTAL;i++) {
-        leafArray.push(new Leaf());
-    }
-    render();
-    
-    function render() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        leafArray.forEach(leaf => leaf.animate())
-        window.requestAnimationFrame(render)
-    }
-}
-
-export function renderSnowAnimation() {
-    for (let i=0;i<SNOWFLAKE_TOTAL;i++) {
-        snowflakeArray.push(new Snowflake());
-    }
-    render();
-    
-    function render() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
-        snowflakeArray.forEach(snowflake => snowflake.animate())
-        window.requestAnimationFrame(render)
-    }
-}
-
-
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
-});
-
+// Classes
 // Leaf class
 class Leaf {
     constructor() {
@@ -97,15 +57,18 @@ class Leaf {
 // Snowflake Class
 class Snowflake {
     constructor() {
-        this.x = (Math.random() * canvas.width * 2) - canvas.width; 
-        this.y = (Math.random() * canvas.height * 2) - canvas.height; 
-        this.w = 50;
-        this.h = 50;
+        this.x = (Math.random() * canvas.width * 2) - canvas.width; // original x location
+        this.y = (Math.random() * canvas.height * 2) - canvas.height; // original y location
+        this.size = 50+Math.random() * 50;
         this.opacity = this.w / 40; // Leaf opacity
         this.img = Math.random() < 0.5 ? snowflakeImg : snowflakeImg2;
-
-        this.xVelocity = 1 + Math.random() * 1;
+        this.behavior = Math.random() < 0.5 ? 'rotating' : 'zigzag'
+        this.xMoveLimit = 0;
+        this.xDir = Math.random() <0.5? 'right' : 'left';
+        this.xVelocity = 0.25;
         this.yVelocity = 0.25 + Math.random() * 1;
+        this.rotation = Math.random() *Math.PI*2; // Random initial rotation
+        this.rotationSpeed = (Math.random() - 0.5) * 0.02; // Random speed between -0.01 to 0.01
     }
 
     draw() {
@@ -113,32 +76,115 @@ class Snowflake {
             this.x = (Math.random() * canvas.width * 2) - canvas.width; 
             this.y = 0;
         }
-
         ctx.globalAlpha = this.opacity;
-        ctx.drawImage(
-        this.img, 
-        this.x, 
-        this.y, 
-        this.w,
-        this.h
-        );
+        if (this.behavior==='rotating') {
+            ctx.save();
+            ctx.translate(this.x + this.size / 2, this.y + this.size / 2); // Translate the matrix of the context to the snowflake's center.
+            ctx.rotate(this.rotation);
+            ctx.drawImage( // If we do not translate and draw the image at this.x and this.y, the result will be snowflakes that orbit the original matrix location of (0,0) of the context, which we don't want. What we want is to achieve is rotating the snowflake image 
+                this.img, 
+                -this.size / 2, // since the matrix has been moved to the center of the snowflake, the top left corner of the image will be at half the width and height from the center of the snowflake / center of the ctx
+                -this.size / 2, 
+                this.size, 
+                this.size
+                ); // Draw the snowflake centered on the origin.
+            ctx.restore(); // Restore the original state
+            
+        }
+        else {
+            ctx.drawImage(
+                this.img, 
+                this.x, 
+                this.y, 
+                this.size,
+                this.size
+            );
+        }
     }
 
     animate() {
-        if (Math.random()<0.9) {
-
-        }
-        else {
-            if (Math.random()<0.5) {
+        if (this.behavior==='zigzag') {
+            if (this.xDir==='right') {
+                if (this.xMoveLimit >= 50) {
+                    this.xDir = 'left';
+                    this.xMoveLimit=0;
+                }
                 this.x += this.xVelocity;
+                this.xMoveLimit+=this.xVelocity;
             }
             else {
+                if (this.xMoveLimit >= 50) {
+                    this.xDir = 'right';
+                    this.xMoveLimit=0;
+                }
                 this.x -= this.xVelocity;
+                this.xMoveLimit+=this.xVelocity;
             }
+        }
+        else {
+            this.rotation += this.rotationSpeed;
         }
         this.y += this.yVelocity;
         this.draw();
     }
-
 }
+
+// Create image objects
+const leafImg = new Image();
+leafImg.src = 'media/img/maple-leaf.png';
+const darkerLeafImg = new Image();
+darkerLeafImg.src = 'media/img/maple-leaf-darker.png';
+const snowflakeImg = new Image();
+snowflakeImg.src = 'media/img/snowflake.png';
+const snowflakeImg2 = new Image();
+snowflakeImg2.src = 'media/img/snowflake-2.png';
+
+function fillLeafArray() {
+    for (let i=0;i<LEAF_TOTAL;i++) {
+        leafArray.push(new Leaf());
+    }
+}
+
+function fillSnowflakeArray() {
+    for (let i=0;i<SNOWFLAKE_TOTAL;i++) {
+        snowflakeArray.push(new Snowflake());
+    }
+}
+
+function renderLeaf() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    leafArray.forEach(leaf => leaf.animate());
+    currentAnimation = window.requestAnimationFrame(renderLeaf);
+}
+
+function renderSnow() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    snowflakeArray.forEach(snowflake => snowflake.animate())
+    currentAnimation = window.requestAnimationFrame(renderSnow)
+}
+
+export function renderLeafAnimation() {
+    if (currentAnimation) {
+        window.cancelAnimationFrame(currentAnimation);
+    }
+    leafArray.length = 0;
+    fillLeafArray();
+    renderLeaf();
+}
+
+export function renderSnowAnimation() {
+    if (currentAnimation) {
+        window.cancelAnimationFrame(currentAnimation);
+    }
+    snowflakeArray.length = 0;
+    fillSnowflakeArray();
+    renderSnow();
+}
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+});
+
+
 
